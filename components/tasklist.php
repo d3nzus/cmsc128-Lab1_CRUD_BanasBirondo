@@ -8,7 +8,13 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo "<li>" . $row["title"] . "</li>";
+        echo "<tr>
+            <td>{$row["title"]}</td>
+            <td>{$row["due_date"]}</td>
+            <td>{$row["due_time"]}</td>
+            <td>{$row["priority"]}</td>
+            <td>{$row["category_id"]}</td>";
+        echo "</tr>";
     }
 }
 else {
