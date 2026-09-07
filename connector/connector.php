@@ -1,6 +1,6 @@
 <?php
 
-    require_once __DIR__ . '/../connector/connector.php';
+    require_once __DIR__ . '/../config/config.php';
 
     $conn = new mysqli($servername, $username, $password); // Connect without specifying a database
     
