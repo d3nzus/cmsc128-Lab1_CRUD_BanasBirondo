@@ -16,12 +16,20 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
+        $prio = $row["priority"];
+        $class = "p-4";
+        $color = match($prio){
+            "low" => "yellow",
+            "med" => "orange",
+            "high" => "red",
+            default => "blue"
+        };
         echo "<tr>
-            <td>{$row["title"]}</td>
-            <td>{$row["due_date"]}</td>
-            <td>{$row["due_time"]}</td>
-            <td>{$row["priority"]}</td>
-            <td>{$row["name"]}</td>";
+            <td class = {$class}>{$row["title"]}</td>
+            <td class = {$class}>{$row["due_date"]}</td>
+            <td class = {$class}>{$row["due_time"]}</td>
+            <td class = {$class} style = 'background-color:{$color}'>{$row["priority"]}</td>
+            <td class = {$class}>{$row["name"]}</td>";
         echo "</tr>";
     }
 }
