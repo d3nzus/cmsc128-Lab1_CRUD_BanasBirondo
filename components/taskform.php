@@ -1,18 +1,18 @@
 <h3>New Task:</h3>
 
-    <form action="/../helpers/addTask.php" method="get">
+    <form action="helpers/addTask.php" method="get">
         <table style="width:100%">
             <tr>
                 <td class="tlabel">Title:</td>
-                <td><input type="text" name="name" required></td>
+                <td><input type="text" name="title" required></td>
             </tr>
             <tr>
                 <td class="tlabel">Time</td>
-                <td><input type="number" name="time" required></td>
+                <td><input type="time" name="time" required></td>
             </tr>
             <tr>
                 <td class="tlabel">Date</td>
-                <td><input type="number" name="date" required></td>
+                <td><input type="date" name="date" required></td>
             </tr>
             <tr>
                 <td class="tlabel"></td>
@@ -23,7 +23,7 @@
             <tr>
                 <td class="tlabel">Categories</td>
                 <td>
-                    <select class="expand" name="department">
+                    <select class="expand" name="category">
                         <option value="" disabled="">--Select Category--</option>
                         <?php
                             require_once __DIR__ . '/../helpers/allCategories.php';
