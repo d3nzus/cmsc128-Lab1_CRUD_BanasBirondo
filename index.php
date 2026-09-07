@@ -16,7 +16,10 @@ require_once __DIR__ . '/database/runBuilder.php';
     <body>
         <div class="container mx-auto bg-red-500 p-4">
             <h1 class="text-white">Lab 1 CRUD</h1>
-            <?php include 'components/tasklist.php'; ?>
+            <?php 
+            include 'components/tasklist.php';
+            include 'components/taskform.php';
+            ?>
         </div>
     </body>
 </html>
