@@ -38,12 +38,25 @@ if ($result->num_rows > 0) {
             "high" => "red",
             default => "blue"
         };
+        //edit and delete button passes the task ID
         echo "<tr>
             <td class = {$class}>{$row["title"]}</td>
             <td class = {$class}>{$row["due_date"]}</td>
             <td class = {$class}>{$row["due_time"]}</td>
             <td class = {$class} style = 'background-color:{$color}'>{$row["priority"]}</td>
-            <td class = {$class}>{$row["name"]}</td>";
+            <td class = {$class}>{$row["name"]}</td>
+            <td>
+                <form class = 'actions' id = 'del{$row["id"]}' action='../components/delete.php' method = 'post'>
+                    <input type = 'text' style = 'display:none' name = 'TaskID' value = {$row["id"]}>
+                    <button type = 'button' onclick = 'confirmDel(\"del{$row["id"]}\")'>Delete</button>
+                </form>
+                <form class = 'actions' action='editForm.php' method = 'post'>
+                    <input type = 'text' style = 'display:none' name = 'TaskID' value = {$row["id"]}>
+                    <button type = 'button' onclick = 'submit()'>Edit</button>
+                </form>
+            </td>
+            ";
+            
         echo "</tr>";
     }
 }
@@ -54,6 +67,19 @@ else {
 echo "    </tbody>
             </table>";
 
+// confirm function
+echo"
+<script>
+function confirmDel(id){
+    if (confirm(\"Confirm Deletion\")){
+        document.getElementById(id).submit();
+        return true;
+    }
+    return false;
+}
+</script>
+";
 ?>
+
 
 
