@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab1_CRUD</title>
-    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/app.css?v=<?= filemtime(__DIR__ . '/../assets/css/app.css') ?>">
 </head>
 
 <body>
-    <div class="container mx-auto bg-red-500 p-4">
+    <div class="flex min-h-screen w-full flex-col items-center justify-center bg-red-500 p-4 text-center">
         <h1 class="text-white">Lab 1 CRUD</h1>
         <?php
         require_once __DIR__ . '/../connector/connector.php';
