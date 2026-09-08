@@ -2,6 +2,8 @@
 <?php
 require_once __DIR__ . '/../connector/connector.php';
 
+$column = $_GET['order'];
+
 $sql = "SELECT
 task.title,
 task.id,
@@ -10,28 +12,48 @@ task.due_time,
 task.priority,
 category.name
 FROM task
-LEFT JOIN category ON task.category_id = category.id";
+LEFT JOIN category ON task.category_id = category.id
+ORDER BY '{$column}' DESC
+";
+
 $taskList = $conn->query($sql);
 
+$class = "p-4";
+//TODO: Put classes for header in rows into proper variables
+//TODO: Rearrange so that there's no need to spam ECHO
 
-echo "<h1 class='text-white'>Task List</h1>
-            <table class = 'border-4'>
-                <thead class = 'border-4'>
-                    <tr>
-                        <th class = 'p-4'> Title </th>
-                        <th class = 'p-4'> Due Date</th>
-                        <th class = 'p-4'> Due Time</th>
-                        <th class = 'p-4'> Priority</th>
-                        <th class = 'p-4'> Category</th>
-                    </tr>
-                </thead>
-                <tbody>";
+echo "<h1 class='text-white'>Task List</h1>";
+?>
+<form action = 'homepage.php'>
+    <label for='order'> Order By: </label>
+    <select name='order' id='order' onchange='this.form.submit()'>
+        <option value = 'id'>ID</option>
+        <option value = 'title'>Title</option>
+        <option value = 'due_date'>Due Date</option>
+        <option value = 'due_time'>Due Time</option>
+        <option value = 'priority'>Priority</option>
+        <option value = 'category'>Category</option>
+    </select>
+</form>;
 
+<?php
+echo "<table class = 'border-4'>
+        <thead class = 'border-4'>
+            <tr>
+                <th class = 'p-4'> Title </th>
+                <th class = 'p-4'> Due Date</th>
+                <th class = 'p-4'> Due Time</th>
+                <th class = 'p-4'> Priority</th>
+                <th class = 'p-4'> Category</th>
+            </tr>
+        </thead>
+        <tbody>";
+
+            
 
 if ($taskList->num_rows > 0) {
     while($task = $taskList->fetch_assoc()) {
         $prio = $task["priority"];
-        $class = "p-4";
         $color = match($prio){
             "low" => "yellow",
             "med" => "orange",
