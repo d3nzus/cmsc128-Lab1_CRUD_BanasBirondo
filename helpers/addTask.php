@@ -14,7 +14,8 @@ $priority = $priorityValues[$_GET['priority'] ?? ''] ?? null;
 $categoryId = filter_input(INPUT_GET, 'category', FILTER_VALIDATE_INT);
 
 if ($title === '' || $time === '' || $date === '' || $priority === null || $categoryId === false || $categoryId === null) {
-    exit('Invalid task details.');
+    console_log('Invalid task details.');
+    exit();
 }
 
 $sql = 'INSERT INTO task (title, due_date, due_time, priority, category_id) VALUES (?, ?, ?, ?, ?)';
