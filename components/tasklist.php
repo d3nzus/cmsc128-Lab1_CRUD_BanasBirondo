@@ -83,6 +83,7 @@ $taskItemClass = "p-4";
                 <?= htmlspecialchars($task["category"]) ?>
             </td>
             <td>
+                <?php echo"
                 <form class = 'actions' id = 'del{$task["id"]}' action='../helpers/deleteTask.php' method = 'post'>
                     <input type = 'text' style = 'display:none' name = 'TaskID' value = {$task["id"]}>
                     <button type = 'button' onclick = 'confirmDel(\"del{$task["id"]}\")'>Delete</button>
@@ -90,7 +91,7 @@ $taskItemClass = "p-4";
                 <form class = 'actions' action='editForm.php' method = 'post'>
                     <input type = 'text' style = 'display:none' name = 'TaskID' value = {$task["id"]}>
                     <button type = 'submit'>Edit</button>
-                </form>
+                </form>"?>
             </td>
         </tr>
     <?php endwhile?>
