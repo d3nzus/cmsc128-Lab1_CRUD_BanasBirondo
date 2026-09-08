@@ -22,7 +22,7 @@ $statement = $conn->prepare($sql);
 $statement->bind_param('ssssi', $title, $date, $time, $priority, $categoryId);
 
 if ($statement->execute()) {
-    header("Location: ../index.php");
+    header("Location: ../pages/homePage.php");
     exit();
 } else {
     console_log('Error adding task: ' . $statement->error);

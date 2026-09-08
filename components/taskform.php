@@ -1,6 +1,6 @@
 <h3>New Task:</h3>
 
-    <form action="helpers/addTask.php" method="get">
+    <form action="../helpers/addTask.php" method="get">
         <table style="width:100%">
             <tr>
                 <td class="tlabel">Title:</td>
