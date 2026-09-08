@@ -12,7 +12,7 @@ if ($taskId === null) {
     exit();
 }
 
-$selectSql = 'SELECT title, due_date, due_time, priority, category_id FROM trash_task WHERE id = ?';
+$selectSql = 'SELECT title, due_date, due_time, priority, category_id, done FROM trash_task WHERE id = ?';
 $selectStatement = $conn->prepare($selectSql);
 $selectStatement->bind_param('i', $taskId);
 
@@ -36,10 +36,11 @@ $dueDate = $task['due_date'];
 $dueTime = $task['due_time'];
 $priority = $task['priority'];
 $categoryId = $task['category_id'];
+$done = (int) $task['done'];
 
-$insertSql = 'INSERT INTO task (id, title, due_date, due_time, priority, category_id) VALUES (?, ?, ?, ?, ?, ?)';
+$insertSql = 'INSERT INTO task (id, title, due_date, due_time, priority, category_id, done) VALUES (?, ?, ?, ?, ?, ?, ?)';
 $insertStatement = $conn->prepare($insertSql);
-$insertStatement->bind_param('issssi', $taskId, $title, $dueDate, $dueTime, $priority, $categoryId);
+$insertStatement->bind_param('issssii', $taskId, $title, $dueDate, $dueTime, $priority, $categoryId, $done);
 
 if (!$insertStatement->execute()) {
     console_log('Error restoring task: ' . $insertStatement->error);

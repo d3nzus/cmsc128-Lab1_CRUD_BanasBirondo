@@ -10,6 +10,7 @@ task.id,
 task.due_date,
 task.due_time,
 task.priority,
+task.done,
 category.name as category
 FROM task
 LEFT JOIN category ON task.category_id = category.id
@@ -45,6 +46,7 @@ $taskList = $conn->query($sql);
             <th class = "p-4 bg-cyan-950"> Due Time</th>
             <th class = "p-4 bg-cyan-950"> Priority</th>
             <th class = "p-4 bg-cyan-950"> Category</th>
+            <th class = "p-4 bg-cyan-950"> Done</th>
             <th class = "p-4 bg-cyan-950"> Actions</th>
         </tr>
     </thead>
@@ -80,6 +82,14 @@ $taskList = $conn->query($sql);
             </td>
             <td class = "p-4 bg-cyan-800">
                 <?= htmlspecialchars($task["category"]) ?>
+            </td>
+            <td class = "p-4 bg-cyan-800">
+                <form action="../helpers/toggleDone.php" method="post">
+                    <input type="hidden" name="TaskID" value="<?= (int) $task['id'] ?>">
+                    <button class="w-full <?= $task['done'] ? 'bg-green-500 hover:bg-green-700' : 'bg-gray-500 hover:bg-gray-700' ?> text-white font-bold py-2 px-2 rounded" type="submit">
+                        <?= $task['done'] ? 'Done' : 'Mark Done' ?>
+                    </button>
+                </form>
             </td>
             <td class = "p-4 bg-cyan-800 space-y-1">
                 <?php echo"
