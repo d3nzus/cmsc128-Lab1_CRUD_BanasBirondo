@@ -15,21 +15,7 @@ require_once __DIR__ . '/database/runBuilder.php';
     </head>
     <body>
         <div class="container mx-auto p-4">
-            <h1 class="text-white">Task List</h1>
-            <table class = "border-4">
-                <thead class = "border-4">
-                    <tr>
-                        <th class = "p-4"> Title </th>
-                        <th class = "p-4"> Due Date</th>
-                        <th class = "p-4"> Due Time</th>
-                        <th class = "p-4"> Priority</th>
-                        <th class = "p-4"> Category</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php include 'components/tasklist.php';?>
-                </tbody>
-            </table>
+            <?php include 'components/tasklist.php';?>
         </div>
     </body>
 </html>
