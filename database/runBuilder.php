@@ -2,16 +2,20 @@
 
     require_once __DIR__ . '/../connector/connector.php';
 
+    require_once __DIR__ . '/../debug/debug.php';
+
     $sql_file_path = __DIR__ . '/db_builder.sql';
 
     if (!file_exists($sql_file_path)) {
-        die("Error: The file '{$sql_file_path}' was not found.");
+        console_log("Error: The file '{$sql_file_path}' was not found.");
+        exit;
     }
 
     $sql_contents = file_get_contents($sql_file_path);
 
     if ($sql_contents === false) {
-        die("Error: Could not read the SQL file.");
+        console_log('Error: Could not read the SQL file.');
+        exit;
     }
 
     if ($conn->multi_query($sql_contents)) {
@@ -21,16 +25,16 @@
             }
 
             if ($conn->error) {
-                echo "Error executing statement: " . $conn->error . "\n";
+                console_log('Error executing statement: ' . $conn->error);
                 break;
             }
         } while ($conn->more_results() && $conn->next_result());
 
         if (!$conn->error) {
-            echo "SQL file executed and imported successfully!";
+            console_log('SQL file executed and imported successfully!');
         }
     } else {
-        echo "Error executing SQL file: " . $conn->error;
+        console_log('Error executing SQL file: ' . $conn->error);
     }
 
 ?>
