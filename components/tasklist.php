@@ -11,7 +11,7 @@ task.priority,
 category.name
 FROM task
 LEFT JOIN category ON task.category_id = category.id";
-$result = $conn->query($sql);
+$taskList = $conn->query($sql);
 
 
 echo "<h1 class='text-white'>Task List</h1>
@@ -28,9 +28,9 @@ echo "<h1 class='text-white'>Task List</h1>
                 <tbody>";
 
 
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $prio = $row["priority"];
+if ($taskList->num_rows > 0) {
+    while($task = $taskList->fetch_assoc()) {
+        $prio = $task["priority"];
         $class = "p-4";
         $color = match($prio){
             "low" => "yellow",
@@ -40,18 +40,18 @@ if ($result->num_rows > 0) {
         };
         //edit and delete button passes the task ID
         echo "<tr>
-            <td class = {$class}>{$row["title"]}</td>
-            <td class = {$class}>{$row["due_date"]}</td>
-            <td class = {$class}>{$row["due_time"]}</td>
-            <td class = {$class} style = 'background-color:{$color}'>{$row["priority"]}</td>
-            <td class = {$class}>{$row["name"]}</td>
+            <td class = {$class}>{$task["title"]}</td>
+            <td class = {$class}>{$task["due_date"]}</td>
+            <td class = {$class}>{$task["due_time"]}</td>
+            <td class = {$class} style = 'background-color:{$color}'>{$task["priority"]}</td>
+            <td class = {$class}>{$task["name"]}</td>
             <td>
-                <form class = 'actions' id = 'del{$row["id"]}' action='../helpers/deleteTask.php' method = 'post'>
-                    <input type = 'text' style = 'display:none' name = 'TaskID' value = {$row["id"]}>
-                    <button type = 'button' onclick = 'confirmDel(\"del{$row["id"]}\")'>Delete</button>
+                <form class = 'actions' id = 'del{$task["id"]}' action='../helpers/deleteTask.php' method = 'post'>
+                    <input type = 'text' style = 'display:none' name = 'TaskID' value = {$task["id"]}>
+                    <button type = 'button' onclick = 'confirmDel(\"del{$task["id"]}\")'>Delete</button>
                 </form>
                 <form class = 'actions' action='editForm.php' method = 'post'>
-                    <input type = 'text' style = 'display:none' name = 'TaskID' value = {$row["id"]}>
+                    <input type = 'text' style = 'display:none' name = 'TaskID' value = {$task["id"]}>
                     <button type = 'submit'>Edit</button>
                 </form>
             </td>
