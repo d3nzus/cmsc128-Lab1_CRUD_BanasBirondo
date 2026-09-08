@@ -1,11 +1,14 @@
 <?php
 
 require_once __DIR__ . '/../connector/connector.php';
+require_once __DIR__ . '/../helpers/trash.php';
 
 $taskId = filter_input(INPUT_POST, 'TaskID', FILTER_VALIDATE_INT);
 if ($taskId === false || $taskId === null) {
     exit('Invalid task ID.');
 }
+
+setTask($taskId);
 
 $sql = 'DELETE FROM task WHERE id = ?';
 $statement = $conn->prepare($sql);
