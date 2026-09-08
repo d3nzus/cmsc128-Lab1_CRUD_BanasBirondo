@@ -39,14 +39,15 @@ if ($task === null) {
     exit();
 }
 
-$archiveSql = "INSERT INTO trash_task (id, title, due_date, due_time, priority, category_id) VALUES (?, ?, ?, ?, ?, ?)";
+$archiveSql = "INSERT INTO trash_task (id, title, due_date, due_time, priority, category_id, done) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $archiveStatement = $conn->prepare($archiveSql);
 $title = $task['title'];
 $dueDate = $task['due_date'];
 $dueTime = $task['due_time'];
 $priority = $task['priority'];
 $categoryId = $task['category_id'];
-$archiveStatement->bind_param("issssi", $taskId, $title, $dueDate, $dueTime, $priority, $categoryId);
+$done = (int) $task['done'];
+$archiveStatement->bind_param("issssii", $taskId, $title, $dueDate, $dueTime, $priority, $categoryId, $done);
 if (!$archiveStatement->execute()) {
     console_log('Error moving task to trash: ' . $archiveStatement->error);
     exit();
