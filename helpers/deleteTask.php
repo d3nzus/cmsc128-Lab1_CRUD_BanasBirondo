@@ -5,7 +5,8 @@ require_once __DIR__ . '/../helpers/trash.php';
 
 $taskId = filter_input(INPUT_POST, 'TaskID', FILTER_VALIDATE_INT);
 if ($taskId === false || $taskId === null) {
-    exit('Invalid task ID.');
+    console_log('Invalid task ID.');
+    exit();
 }
 
 setTask($taskId);
@@ -18,7 +19,8 @@ if ($statement->execute()) {
     header("Location: ../pages/homePage.php");
     exit();
 } else {
-    exit('Error deleting task: ' . $statement->error);
+    console_log('Error deleting task: ' . $statement->error);
+    exit();
 }
 
 $statement->close();

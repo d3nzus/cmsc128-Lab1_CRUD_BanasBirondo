@@ -15,7 +15,8 @@ $date = $_POST['date'] ?? '';
 $time = $_POST['time'] ?? '';
 
 if ($taskId === false || $taskId === null || $categoryId === false || $categoryId === null || $priority === null || $title === '' || $date === '' || $time === '') {
-	exit('Invalid task details.');
+	console_log('Invalid task details.');
+	exit();
 }
 
 $sql = 'UPDATE task SET title = ?, due_date = ?, due_time = ?, priority = ?, category_id = ? WHERE id = ?';

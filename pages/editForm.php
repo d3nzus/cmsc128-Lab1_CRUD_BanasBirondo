@@ -16,7 +16,8 @@
 
         $taskId = filter_input(INPUT_POST, 'TaskID', FILTER_VALIDATE_INT);
         if ($taskId === false || $taskId === null) {
-            exit('Invalid task ID.');
+            console_log('Invalid task ID.');
+            exit();
         }
 
         $statement = $conn->prepare('SELECT * FROM task WHERE id = ?');
@@ -26,7 +27,8 @@
         $statement->close();
 
         if (!$row) {
-            exit('Task not found.');
+            console_log('Task not found.');
+            exit();
         }
 
         $priorityValues = ['low' => '0', 'med' => '1', 'high' => '2'];

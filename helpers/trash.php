@@ -22,12 +22,14 @@ function setTask(int $id): void
     $statement->bind_param("i", $id);
 
     if (!$statement->execute()) {
-        exit('Error fetching task: ' . $statement->error);
+        console_log('Error fetching task: ' . $statement->error);
+        exit();
     }
 
     $task = $statement->get_result()->fetch_assoc();
     if ($task === null) {
-        exit('Task not found.');
+        console_log('Task not found.');
+        exit();
     }
 
     $taskId = $task['id'];
@@ -41,7 +43,8 @@ function setTask(int $id): void
     $archiveStatement = $conn->prepare($archiveSql);
     $archiveStatement->bind_param("issssi", $taskId, $title, $due_date, $due_time, $priority, $category);
     if (!$archiveStatement->execute()) {
-        exit('Error moving task to trash: ' . $archiveStatement->error);
+        console_log('Error moving task to trash: ' . $archiveStatement->error);
+        exit();
     }
     $archiveStatement->close();
     $_SESSION['deleted_task_id'] = $taskId;
@@ -56,13 +59,15 @@ function undoDelete(int $id): void
     $selectStatement = $conn->prepare($selectSql);
     $selectStatement->bind_param("i", $id);
     if (!$selectStatement->execute()) {
-        exit('Error finding deleted task: ' . $selectStatement->error);
+        console_log('Error finding deleted task: ' . $selectStatement->error);
+        exit();
     }
 
     $task = $selectStatement->get_result()->fetch_assoc();
     $selectStatement->close();
     if ($task === null) {
-        exit('Deleted task not found.');
+        console_log('Deleted task not found.');
+        exit();
     }
 
     $title = $task['title'];
@@ -86,13 +91,15 @@ function undoDelete(int $id): void
         exit();
     }
 
-    exit('Error restoring task: ' . $statement->error);
+    console_log('Error restoring task: ' . $statement->error);
+    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'undo') {
     $deletedTaskId = $_SESSION['deleted_task_id'] ?? null;
     if ($deletedTaskId === null) {
-        exit('No deleted task to restore.');
+        console_log('No deleted task to restore.');
+        exit();
     }
 
     undoDelete((int) $deletedTaskId);
