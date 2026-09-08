@@ -37,6 +37,13 @@ $taskList = $conn->query($sql);
     </select>
 </form>
 
+<div class="w-fit">
+<div class="flex flex-row gap-3 w-full justify-start">
+    <?php
+            include __DIR__ . '/../components/addButton.php';
+            include __DIR__ . '/../components/undoButton.php';
+    ?>
+</div>
 
 <table class = 'border-4 text-cyan-100 mb-5'>
     <thead class = 'border-4'>
@@ -119,6 +126,7 @@ $taskList = $conn->query($sql);
 
     </tbody>
 </table>
+</div>
 
 
 <script>

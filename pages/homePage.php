@@ -11,8 +11,6 @@
             <h1 class="text-white text-4xl">Lab 1 CRUD</h1>
             <?php 
             include __DIR__ . '/../components/tasklist.php';
-            include __DIR__ . '/../components/addButton.php';
-            include __DIR__ . '/../components/undoButton.php';
             ?>
         </div>
     </body>
