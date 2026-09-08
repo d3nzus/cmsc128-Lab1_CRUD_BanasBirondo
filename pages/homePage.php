@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="flex min-h-screen w-full flex-col items-center justify-center bg-gray-700 p-4 text-center">
-            <h1 class="text-white">Lab 1 CRUD</h1>
+            <h1 class="text-white text-4xl">Lab 1 CRUD</h1>
             <?php 
             include __DIR__ . '/../components/tasklist.php';
             include __DIR__ . '/../components/addButton.php';
