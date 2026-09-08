@@ -46,13 +46,13 @@ if ($result->num_rows > 0) {
             <td class = {$class} style = 'background-color:{$color}'>{$row["priority"]}</td>
             <td class = {$class}>{$row["name"]}</td>
             <td>
-                <form class = 'actions' id = 'del{$row["id"]}' action='../components/delete.php' method = 'post'>
+                <form class = 'actions' id = 'del{$row["id"]}' action='../helpers/deleteTask.php' method = 'post'>
                     <input type = 'text' style = 'display:none' name = 'TaskID' value = {$row["id"]}>
                     <button type = 'button' onclick = 'confirmDel(\"del{$row["id"]}\")'>Delete</button>
                 </form>
                 <form class = 'actions' action='editForm.php' method = 'post'>
                     <input type = 'text' style = 'display:none' name = 'TaskID' value = {$row["id"]}>
-                    <button type = 'button' onclick = 'submit()'>Edit</button>
+                    <button type = 'submit'>Edit</button>
                 </form>
             </td>
             ";
