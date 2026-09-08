@@ -9,6 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 $taskId = $_SESSION['deleted_task_id'] ?? null;
 if ($taskId === null) {
     console_log('Nothing to undo.');
+    header('Location: ../pages/homePage.php');
     exit();
 }
 
@@ -18,6 +19,7 @@ $selectStatement->bind_param('i', $taskId);
 
 if (!$selectStatement->execute()) {
     console_log('Error grabbing archive: ' . $selectStatement->error);
+    header('Location: ../pages/homePage.php');
     exit();
 }
 
@@ -28,6 +30,7 @@ $selectStatement->close();
 
 if ($task === null) {
     console_log('Deleted task not found.');
+    header('Location: ../pages/homePage.php');
     exit();
 }
 
@@ -44,6 +47,7 @@ $insertStatement->bind_param('issssii', $taskId, $title, $dueDate, $dueTime, $pr
 
 if (!$insertStatement->execute()) {
     console_log('Error restoring task: ' . $insertStatement->error);
+    header('Location: ../pages/homePage.php');
     exit();
 }
 $insertStatement->close();
@@ -54,6 +58,7 @@ $deleteStatement->bind_param('i', $taskId);
 
 if (!$deleteStatement->execute()) {
     console_log('Error clearing restored task: ' . $deleteStatement->error);
+    header('Location: ../pages/homePage.php');
     exit();
 }
 $deleteStatement->close();
