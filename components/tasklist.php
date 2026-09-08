@@ -17,11 +17,8 @@ ORDER BY {$order} {$asc_desc};
 ";
 
 $taskList = $conn->query($sql);
-
-$class = "p-4";
-//TODO: Put classes for header in rows into proper variables
-//TODO: Rearrange so that there's no need to spam ECHO
-
+$headerClass = "p-4";
+$taskItemClass = "p-4";
 
 ?>
 <h1 class='text-white'>Task List</h1>
@@ -42,23 +39,24 @@ $class = "p-4";
     </select>
 </form>
 
-<?php
-echo "<table class = 'border-4'>
-        <thead class = 'border-4'>
-            <tr>
-                <th class = 'p-4'> Title </th>
-                <th class = 'p-4'> Due Date</th>
-                <th class = 'p-4'> Due Time</th>
-                <th class = 'p-4'> Priority</th>
-                <th class = 'p-4'> Category</th>
-            </tr>
-        </thead>
-        <tbody>";
+
+<table class = 'border-4'>
+    <thead class = 'border-4'>
+        <tr>
+            <th class = <?= htmlspecialchars($headerClass) ?>> Title </th>
+            <th class = <?= htmlspecialchars($headerClass) ?>> Due Date</th>
+            <th class = <?= htmlspecialchars($headerClass) ?>> Due Time</th>
+            <th class = <?= htmlspecialchars($headerClass) ?>> Priority</th>
+            <th class = <?= htmlspecialchars($headerClass) ?>> Category</th>
+        </tr>
+    </thead>
+    <tbody>
+
 
             
-
-if ($taskList->num_rows > 0) {
-    while($task = $taskList->fetch_assoc()) {
+<?php if ($taskList->num_rows > 0): ?>
+    <?php while($task = $taskList->fetch_assoc()): ?>
+    <?php
         $prio = $task["priority"];
         $color = match($prio){
             "low" => "yellow",
@@ -66,14 +64,26 @@ if ($taskList->num_rows > 0) {
             "high" => "red",
             default => "blue"
         };
-        //edit and delete button passes the task ID
-        echo "<tr>
-            <td class = {$class}>{$task["title"]}</td>
-            <td class = {$class}>{$task["due_date"]}</td>
-            <td class = {$class}>{$task["due_time"]}</td>
-            <td class = {$class} style = 'background-color:{$color}'>{$task["priority"]}</td>
-            <td class = {$class}>{$task["category"]}</td>
+    ?>
+        <!--edit and delete button passes the task ID-->
+        <tr>
+            <td class = <?= htmlspecialchars($taskItemClass) ?>>
+                <?= htmlspecialchars($task["title"]) ?>
+            </td>
+            <td class = <?= htmlspecialchars($taskItemClass) ?>>
+                <?= htmlspecialchars($task["due_date"]) ?>
+            </td>
+            <td class = <?= htmlspecialchars($taskItemClass) ?>>
+                <?= htmlspecialchars($task["due_time"]) ?>
+            </td>
+            <td class = <?= htmlspecialchars($taskItemClass) ?>>
+                <?= htmlspecialchars($task["priority"]) ?>
+            </td>
+            <td class = <?= htmlspecialchars($taskItemClass) ?>>
+                <?= htmlspecialchars($task["category"]) ?>
+            </td>
             <td>
+                <?php echo"
                 <form class = 'actions' id = 'del{$task["id"]}' action='../helpers/deleteTask.php' method = 'post'>
                     <input type = 'text' style = 'display:none' name = 'TaskID' value = {$task["id"]}>
                     <button type = 'button' onclick = 'confirmDel(\"del{$task["id"]}\")'>Delete</button>
@@ -81,33 +91,29 @@ if ($taskList->num_rows > 0) {
                 <form class = 'actions' action='editForm.php' method = 'post'>
                     <input type = 'text' style = 'display:none' name = 'TaskID' value = {$task["id"]}>
                     <button type = 'submit'>Edit</button>
-                </form>
+                </form>"?>
             </td>
-            ";
-            
-        echo "</tr>";
-    }
-}
-else {
-    echo "<td> Zero Results </td>";
-}
+        </tr>
+    <?php endwhile?>
+<?php else: ?>
+        <td> Zero Results </td>
+<?php endif ?>
 
-echo "    </tbody>
-            </table>";
+    </tbody>
+</table>";
 
-// confirm function
-echo"
+
 <script>
+// confirm function
 function confirmDel(id){
-    if (confirm(\"Confirm Deletion\")){
+    if (confirm("Confirm Deletion")){
         document.getElementById(id).submit();
         return true;
     }
     return false;
 }
 </script>
-";
-?>
+
 
 
 
