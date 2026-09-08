@@ -9,11 +9,25 @@ CREATE DATABASE IF NOT EXISTS `128crud_db`;
 
 USE `128crud_db`;
 
-
 CREATE TABLE `category` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `trash_task` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `due_date` DATE NOT NULL,
+  `due_time` TIME NOT NULL,
+  `priority` ENUM('low', 'med', 'high') NOT NULL DEFAULT 'med',
+  `category_id` INT UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_trash_task_category` (`category_id`),
+  CONSTRAINT `fk_trash_task_category` FOREIGN KEY (`category_id`)
+    REFERENCES `category` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `task` (
