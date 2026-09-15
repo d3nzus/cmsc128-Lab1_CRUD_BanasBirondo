@@ -102,5 +102,5 @@ cmsc128-Lab1_CRUD_BanasBirondo/
 
 ## Authors
 
-- Renz Frederick Banas
+- Renz Frederick Bañas
 - Yuan Miguel Birondo
